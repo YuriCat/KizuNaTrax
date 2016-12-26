@@ -23,14 +23,19 @@ trax engine with TCP-IP communication (mainly CPU vs. CPU)
 
 **-W**
 game start (CPU is 1st player)
+
 **-B**
 game start (CPU is 2nd player)
+
 **-M (Trax Notation)**
 do 1 move
+
 **-U**
 undo 1 move
+
 **-I**
 initialize board
+
 **-E**
 exit program
 
