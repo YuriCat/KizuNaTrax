@@ -15,7 +15,7 @@ uint64_t LIMIT_TIME = 750;
 //#undef CERR
 //#endif
 
-const std::string MY_DEFAULT_CODE = "18";
+const std::string MY_DEFAULT_CODE = "KZ";
 const std::string MY_NAME = "KizuNa";
 const std::string MY_VERSION = "160907";
 

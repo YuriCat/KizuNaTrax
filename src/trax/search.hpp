@@ -120,7 +120,8 @@ namespace Trax{
             constexpr bool kIsRoot = kNodeType == kRootNode;
             constexpr bool kIsPv   = kNodeType == kPvNode || kNodeType == kRootNode;
             
-            assert(-kScoreInfinite <= alpha && alpha < beta && beta <= kScoreInfinite);
+            ASSERT(-kScoreInfinite <= alpha && alpha < beta && beta <= kScoreInfinite,
+                   cerr << alpha << " " << beta << endl;);
             
             DERR << alpha << " - " << beta << endl;
             
@@ -274,7 +275,7 @@ namespace Trax{
                             return MoveScore(kMoveNone, kScoreZero);
                         }
                         
-                        if(score > beta){
+                        if(score >= beta){
                             bestScore = score;
                             bestMove = move;
                             goto search_end;
@@ -531,7 +532,7 @@ namespace Trax{
                  }
                  }*/
                 
-                if(score > beta){
+                if(score >= beta){
                     bestScore = score;
                     bestMove = move;
                     goto search_end;
@@ -651,7 +652,7 @@ namespace Trax{
                 //if(Move(ms) != kMoveNone){
                     moves[m].score = score;
                     
-                    if(score > beta){
+                    if(score >= beta){
                         bestScore = score;
                         bestMove = move;
                         break;
