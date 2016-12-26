@@ -1,10 +1,20 @@
-# KizuNa
+# Trax engine KizuNa
 
-unlimited trax engine written in C++14
+**Trax** engine written in C++14
 
-2nd place in **The 2nd RECONF/CPSY/ARC/GI Trax Design Competition** (2016)
+KizuNa got **2nd place** in **The 2nd RECONF/CPSY/ARC/GI Trax Design Competition** (2016)
 
 http://trax-fit2016.github.io/contest/ (Japanese page)
+
+## Rule of Trax game
+
+http://www.traxgame.com/about_rules.php (English)
+
+http://www.tantrix.jp/trax/trax_rule.htm (Japanese)
+
+## Trax notation
+
+http://lut.eee.u-ryukyu.ac.jp/traxwiki/index.php?%E3%83%AB%E3%83%BC%E3%83%AB#notation (Japanese)
 
 ## How to build
 
@@ -23,6 +33,8 @@ trax engine with stdin, stdout (HUMAN vs. CPU)
 ./out/release/kizuna_client
 
 trax engine with TCP-IP communication (mainly CPU vs. CPU)
+
+protocol in competition is here (http://lut.eee.u-ryukyu.ac.jp/traxwiki/ ; Japanese)
 
 ### commands before game
 
@@ -75,3 +87,7 @@ undo 2 moves
 **-E**
 
 exit from game
+
+## Acknowledgements
+
+some codes of KizuNa are based on Gikou (https://github.com/gikou-official/Gikou) and Yaneuraou (https://github.com/yaneurao/YaneuraOu), which are both strong Shogi (Japanese Chess) engine.
