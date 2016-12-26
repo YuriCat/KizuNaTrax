@@ -90,4 +90,4 @@ exit from game
 
 ## Acknowledgements
 
-some codes of KizuNa are based on Gikou (https://github.com/gikou-official/Gikou) and Yaneuraou (https://github.com/yaneurao/YaneuraOu), which are both strong Shogi (Japanese Chess) engine.
+some codes of KizuNa are based on Gikou (https://github.com/gikou-official/Gikou) or Yaneuraou (https://github.com/yaneurao/YaneuraOu), which are both strong Shogi (Japanese Chess) engine.
