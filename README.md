@@ -46,7 +46,7 @@ undo 1 move
 
 initialize board
 
-**-R (Trax Notations) -F **
+**-R (Trax Notations) -F**
 
 do moves
 
