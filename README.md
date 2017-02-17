@@ -1,5 +1,7 @@
 # Trax engine KizuNa
 
+![Board Expression by Kizuna](kizuna_trax.png)
+
 **Trax** engine written in C++14
 
 KizuNa got **2nd place** in **The 2nd RECONF/CPSY/ARC/GI Trax Design Competition** (2016)
