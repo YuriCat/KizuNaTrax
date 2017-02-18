@@ -347,7 +347,7 @@ namespace Trax{
             //RootMove rm(Move(best));
             //rm.score = best.score;
             
-            return std::move(best);
+            return best;
         }
     }
 }

@@ -701,7 +701,7 @@ namespace Trax{
         template<int MODE = 0>
         bool equals(const Straights& rhs)const{
             for(int j = 0; j < N + 1; ++j){
-                if(!st_[0][j].equals<MODE>(rhs.st_[0][j])){
+                if(!st_[0][j].template equals<MODE>(rhs.st_[0][j])){
                     if(MODE){
                         cerr << "different y-straight " << j;
                     }
@@ -709,7 +709,7 @@ namespace Trax{
                 }
             }
             for(int j = 0; j < N + 1; ++j){
-                if(!st_[1][j].equals<MODE>(rhs.st_[1][j])){
+                if(!st_[1][j].template equals<MODE>(rhs.st_[1][j])){
                     if(MODE){
                         cerr << "different x-straight " << j;
                     }

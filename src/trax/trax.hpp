@@ -1032,6 +1032,7 @@ namespace Trax{
             default: UNREACHABLE; break;
         }
         UNREACHABLE;
+        return -1;
     }
     
     /**************************相対着手<->絶対着手変換**************************/

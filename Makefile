@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS =  -std=c++1y -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-function -Wno-unused-value -Wno-sign-compare -Wno-unused-variable -Wno-unused-but-set-variable
+CXXFLAGS = -std=c++1y -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-function -Wno-unused-value -Wno-sign-compare -Wno-unused-variable -Wno-unused-but-set-variable
 
 ifeq ($(OS),Windows_NT)
   # for Windows
@@ -18,10 +18,10 @@ else
 endif
 
 ifeq ($(TARGET),release)
-	CXXFLAGS += -Ofast -flto -DNDEBUG
+	CXXFLAGS += -Ofast -DNDEBUG
 endif
 ifeq ($(TARGET),default)
-	CXXFLAGS += -Ofast -g
+	CXXFLAGS += -Ofast -g -fno-fast-math
 endif
 ifeq ($(TARGET),debug)
 	CXXFLAGS += -O0 -g -DDEBUG -D_GLIBCXX_DEBUG

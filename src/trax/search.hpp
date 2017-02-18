@@ -629,7 +629,7 @@ namespace Trax{
                                 // ルートでの評価値差によるリダクション
                                 // イテレーションが増えるほど信頼出来るはずなので効果を大きくする
                                 //nextDepth -= Depth(int(sqrt(previousBestScore - moves[m].score)) * (double)kOnePly / (28 / sqrt((double)depth / double(kOnePly))));
-                                nextDepth -= Depth(int(sqrt(previousBestScore - moves[m].score)) * kOnePly / 17);
+                                nextDepth -= Depth(int(sqrt(double(previousBestScore - moves[m].score))) * kOnePly / 17);
                                 // ルートでの順位によるリダクション
                                 nextDepth = Depth((double)nextDepth * (2.8 / (4 + m) + 0.3));
                             }else{

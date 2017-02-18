@@ -23,12 +23,12 @@
 #include "bitArray.hpp"
 
 template<typename data_t, int MAX_SIZE_ = (sizeof(data_t) * 8), typename atomic_data_t = data_t>
-class BitSetInRegister{
+class alignas(data_t) BitSetInRegister{
     
 public:
     using size_t = std::size_t; // unsigned int;
     using entry_t = data_t;
-    using this_type_t = BitSetInRegister<data_t, MAX_SIZE_, atomic_data_t>;
+    using this_t = BitSetInRegister<data_t, MAX_SIZE_, atomic_data_t>;
     
     // constructor
     constexpr BitSetInRegister() :dat_(){}
@@ -42,16 +42,24 @@ public:
     // operator
     constexpr operator data_t()const noexcept{ return static_cast<data_t>(dat_); }
     
-    this_type_t& operator=(const data_t arg)noexcept{ dat_ = arg; return *this; }
-    this_type_t& operator+=(const data_t arg)noexcept{ dat_ += arg; return *this; }
-    this_type_t& operator-=(const data_t arg)noexcept{ dat_ -= arg; return *this; }
-    this_type_t& operator*=(const data_t arg)noexcept{ dat_ += arg; return *this; }
-    this_type_t& operator/=(const data_t arg)noexcept{ dat_ -= arg; return *this; }
-    this_type_t& operator|=(const data_t arg)noexcept{ dat_ |= arg; return *this; }
-    this_type_t& operator&=(const data_t arg)noexcept{ dat_ &= arg; return *this; }
-    this_type_t& operator^=(const data_t arg)noexcept{ dat_ ^= arg; return *this; }
-    this_type_t& operator<<=(const size_t arg)noexcept{ dat_ <<= arg; return *this; }
-    this_type_t& operator>>=(const size_t arg)noexcept{ dat_ >>= arg; return *this; }
+    /*constexpr this_t operator ~()const noexcept{ return this_t(~dat_); }
+    
+    constexpr this_t operator +(const data_t arg)const noexcept{ return this_t(dat_ + arg); }
+    constexpr this_t operator -(const data_t arg)const noexcept{ return this_t(dat_ - arg); }
+    constexpr this_t operator &(const data_t arg)const noexcept{ return this_t(dat_ & arg); }
+    constexpr this_t operator |(const data_t arg)const noexcept{ return this_t(dat_ | arg); }
+    constexpr this_t operator ^(const data_t arg)const noexcept{ return this_t(dat_ ^ arg); }*/
+    
+    this_t& operator=(const data_t arg)noexcept{ dat_ = arg; return *this; }
+    this_t& operator+=(const data_t arg)noexcept{ dat_ += arg; return *this; }
+    this_t& operator-=(const data_t arg)noexcept{ dat_ -= arg; return *this; }
+    this_t& operator*=(const data_t arg)noexcept{ dat_ += arg; return *this; }
+    this_t& operator/=(const data_t arg)noexcept{ dat_ -= arg; return *this; }
+    this_t& operator|=(const data_t arg)noexcept{ dat_ |= arg; return *this; }
+    this_t& operator&=(const data_t arg)noexcept{ dat_ &= arg; return *this; }
+    this_t& operator^=(const data_t arg)noexcept{ dat_ ^= arg; return *this; }
+    this_t& operator<<=(const size_t arg)noexcept{ dat_ <<= arg; return *this; }
+    this_t& operator>>=(const size_t arg)noexcept{ dat_ >>= arg; return *this; }
         
     static void assert_index(const size_t p){
         ASSERT(0 <= p && p < MAX_SIZE_, std::cerr << p << " in " << MAX_SIZE_ << std::endl; );
@@ -72,49 +80,49 @@ public:
     
         
     // 状態を変化させる関数
-    this_type_t& set(const size_t p)noexcept{ // 位置|p|に1を立てる
+    this_t& set(const size_t p)noexcept{ // 位置|p|に1を立てる
         assert_index(p);
         dat_ |= mask(p);
         return *this;
     }
-    this_type_t& flip(const size_t p)noexcept{ // 位置|p|を反転
+    this_t& flip(const size_t p)noexcept{ // 位置|p|を反転
         assert_index(p);
         dat_ ^= mask(p);
         return *this;
     }
-    this_type_t& reset(const size_t p)noexcept{ // 位置|p|を0にする
+    this_t& reset(const size_t p)noexcept{ // 位置|p|を0にする
         assert_index(p);
         dat_ &= ~mask(p);
         return *this;
     }
-    this_type_t& set_value(const size_t p, const entry_t v)noexcept{ // 位置|p|の値を|v|にする(元々あった場合には消さない)
+    this_t& set_value(const size_t p, const entry_t v)noexcept{ // 位置|p|の値を|v|にする(元々あった場合には消さない)
         assert_index(p);
         dat_ |= v << p;
         return *this;
     }
-    this_type_t& assign(const size_t p, const entry_t v)noexcept{ // 位置|p|の値を|v|にする
+    this_t& assign(const size_t p, const entry_t v)noexcept{ // 位置|p|の値を|v|にする
         assert_index(p);
         dat_ = (dat_ & ~mask(p)) | (v << p);
         return *this;
     }
     
-    this_type_t& push(const size_t p, const entry_t v)noexcept{ // 位置|p|に|v|を押し込む
+    this_t& push(const size_t p, const entry_t v)noexcept{ // 位置|p|に|v|を押し込む
         assert_index(p);
         dat_ = (dat_ & lower_mask(p)) | ((dat_ & (~lower_mask(p))) << 1) | mask(p);
         return *this;
     }
-    this_type_t& push0(const size_t p)noexcept{ // 位置|p|に0を押し込む
+    this_t& push0(const size_t p)noexcept{ // 位置|p|に0を押し込む
         assert_index(p);
         dat_ = (dat_ & lower_mask(p)) | ((dat_ & (~lower_mask(p))) << 1);
         return *this;
     }
-    this_type_t& push1(const size_t p)noexcept{ // 位置|p|に1を押し込む
+    this_t& push1(const size_t p)noexcept{ // 位置|p|に1を押し込む
         assert_index(p);
         dat_ = (dat_ & lower_mask(p)) | ((dat_ & (~lower_mask(p))) << 1) | mask(p);
         return *this;
     }
         
-    this_type_t& remove(const size_t p)noexcept{ // 位置|p|から1つ抜いて寄せる
+    this_t& remove(const size_t p)noexcept{ // 位置|p|から1つ抜いて寄せる
         assert_index(p);
         dat_ = (dat_ & lower_mask(p)) | ((dat_ >> 1) & (~lower_mask(p)));
         return *this;
@@ -124,10 +132,10 @@ public:
     //    dat_ = (dat_ & lower_mask(p)) | ((static_cast<signed_type<data_t>::type>(dat_) >> 1) & (~lower_mask(p)));
     //}
 
-    this_type_t& reset()noexcept{ // 全て0に
+    this_t& reset()noexcept{ // 全て0に
         dat_ = static_cast<data_t>(0); return *this;
     }
-    this_type_t& flip()noexcept{ // 全反転
+    this_t& flip()noexcept{ // 全反転
         dat_ = ~dat_; return *this;
     }
 
@@ -147,21 +155,21 @@ public:
         dat_ |= mask(p0) | mask(p1) | mask(p2) | mask(p3) | mask(p4) | mask(p5);
     }
 
-    this_type_t& fill()noexcept{ // 全て1
+    this_t& fill()noexcept{ // 全て1
         dat_ = full_mask();
         return *this;
     }
-    this_type_t& fill_through_back(const size_t p)noexcept{ // 最後まで全て1に
+    this_t& fill_through_back(const size_t p)noexcept{ // 最後まで全て1に
         assert_index(p);
         dat_ |= ~lower_mask(p);
         return *this;
     }
-    this_type_t& fill(const size_t p0, const size_t p1)noexcept{ // 位置|p0|から|p1|まで(両端含む)の全てを1に
+    this_t& fill(const size_t p0, const size_t p1)noexcept{ // 位置|p0|から|p1|まで(両端含む)の全てを1に
         assert_index(p0); assert_index(p1);
         dat_ |= lower_mask(p1 + 1) & (~lower_mask(p0));
         return *this;
     }
-    this_type_t& reset_through_back(const size_t p)noexcept{ // 最後まで全て0に
+    this_t& reset_through_back(const size_t p)noexcept{ // 最後まで全て0に
         assert_index(p);
         dat_ &= lower_mask(p);
         return *this;
@@ -175,16 +183,16 @@ public:
         assert_index(p);
         data_t d = dat_ & (~lower_mask(p));
         if(d){
-            return static_cast<this_type_t>(d).bsf();
+            return static_cast<this_t>(d).bsf();
         }
         return -1;
     }
         
-    this_type_t& pop_lsb()noexcept{
+    this_t& pop_lsb()noexcept{
         dat_ &= (dat_ - static_cast<data_t>(1)); return *this;
     }
         
-    this_type_t& init()noexcept{
+    this_t& init()noexcept{
         dat_ = static_cast<data_t>(0); return *this;
     }
 
@@ -229,6 +237,7 @@ public:
     }
     
     constexpr data_t any()const noexcept{ return dat_; }
+    constexpr data_t any2()const noexcept{ return any2Bits(dat_); }
     constexpr bool none()const noexcept{ return (dat_ == 0); }
     constexpr bool empty()const noexcept{ return (dat_ == 0); }
     constexpr bool all()const noexcept{ return (dat_ == full_mask()); }
@@ -264,7 +273,7 @@ public:
         
     std::string to_set_string()const{
         std::ostringstream oss;
-        this_type_t tmp = data();
+        this_t tmp = data();
         oss << "{";
         while(tmp.any()){
             size_t i = tmp.bsf();

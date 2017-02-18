@@ -142,7 +142,7 @@ static std::string lineUp(const std::vector<std::string>& v,
             maxLength[i] = max(maxLength[i], s.size());
         }
     }
-    cerr << maxLength << endl;
+    //cerr << maxLength << endl;
     std::stringstream oss;
     for(std::size_t j = 0; j < maxComponents; ++j){
         for(std::size_t i = 0; i < splitted.size(); ++i){
