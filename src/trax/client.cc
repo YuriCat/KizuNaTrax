@@ -233,13 +233,19 @@ int gameLoop(Trax::Board& bd, const Trax::Color myColor){ // main loop to procee
                 //CERR << oppNotationString << endl;
                 //CERR << oppMove << endl;
                 if(oppMove == kMoveNone){
-                    CERR << "opponent move was unrecognized." << endl; continue;
+                    CERR << "opponent move was unrecognized." << endl;
+                    continue;
                 }
                 CERR << "opponent move = " << oppMove << " in notation " << toNotationString(oppMove, bd) << endl;
                 Global::record.push_back(oppNotationString);
                 ret = bd.makeMove(oppMove);
                 if(ret < 0){
-                    CERR << "opponent violation!" << endl; break;
+                    CERR << "opponent violation!" << endl;
+#ifdef ENGINE
+                    continue;
+#else
+                    break;
+#endif
                 }
             }
         }
